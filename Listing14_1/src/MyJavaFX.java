@@ -8,8 +8,7 @@ public class MyJavaFX extends Application{
             @Override
         public void start(Stage primaryStage){
         Button btOK = new Button("OK");
-        
-        Scene scene = new Scene(btOK, 200, 250);
+        Scene scene = new Scene(btOK, 200, 250);    // send item, and size
         
         primaryStage.setTitle("MyJavaFX");          // title of our window
         primaryStage.setScene(scene);               // Set up our scene
