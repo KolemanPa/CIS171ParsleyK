@@ -1,14 +1,17 @@
+// the whole purpose of the exercise is to implement the Calendar and GregorianCalendar classes. That has not been done at all. Points will be awarded for the GitHub setup and program submission, but none for the program.
+
+
 import java.util.Scanner;
 
 public class PrintCalendar {
   /** Main method */
   public static void main(String[] args) {
     Scanner input = new Scanner(System.in);
-
+// no data validation
     // Prompt the user to enter year
     System.out.print("Enter full year (e.g., 2001): ");
     int year = input.nextInt();
-
+// no data validation for numeric input
     // Prompt the user to enter month
     System.out.print("Enter month in number between 1 and 12: ");
     int month = input.nextInt();
@@ -33,7 +36,7 @@ public class PrintCalendar {
     System.out.println("-----------------------------");
     System.out.println(" Sun Mon Tue Wed Thu Fri Sat");
   }
-
+// use methods available to Calendar and GregorianCalendar classes
   /** Get the English name for the month */
   public static String getMonthName(int month) {
     String monthName = "";
@@ -78,7 +81,7 @@ public class PrintCalendar {
     System.out.println();
     System.out.println("Their are " +getNumberOfDaysInMonth(year, month) + " Days in this month!");
   }
-
+// use methods available to Calendar and GregorianCalendar classes
   /** Get the start day of month/1/year */
   public static int getStartDay(int year, int month) {
     final int START_DAY_FOR_JAN_1_1800 = 3;
@@ -106,7 +109,7 @@ public class PrintCalendar {
 
     return total;
   }
-
+// use methods available to Calendar and GregorianCalendar classes
   /** Get the number of days in a month */
   public static int getNumberOfDaysInMonth(int year, int month) {
     if (month == 1 || month == 3 || month == 5 || month == 7 ||
