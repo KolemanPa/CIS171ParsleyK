@@ -4,6 +4,8 @@
 * Date:         2/21/2019
 * Purpose:      Demo buttons
 */
+
+// IMPORTS!!!!!!!!!!!!!!!!
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.application.Application;
@@ -25,13 +27,13 @@ import javafx.scene.shape.Ellipse;
 
 public class ButtonDemo extends Application{
     //class level (instance) varriable
-    protected Text text = new Text(50,50,"JavaFx Programming");
+    protected Text text = new Text(50,50,"THIS IS THE ORIGNIAL TEXT :)");       // sets default text
     
     protected BorderPane getPane(){
         HBox paneForButtons = new HBox(20);
-        Button btLeft = new Button("",new ImageView("images/leftArrow.png"));
-        Button btRight = new Button("", new ImageView("images/rightArrow.png"));
-        paneForButtons.getChildren().addAll(btLeft,btRight);
+        Button btLeft = new Button("left");                                     // adds left and right button
+        Button btRight = new Button("right");
+        paneForButtons.getChildren().addAll(btLeft,btRight);                    // sets left and right button in hbox
         paneForButtons.setAlignment(Pos.CENTER);
         paneForButtons.setStyle("-fx-border-color: green");
         
@@ -48,7 +50,7 @@ public class ButtonDemo extends Application{
         return pane;                                                                        //Return to Caller
     }
 
-    @Override 
+    @Override   // OVERRIDE THE START METHOD IN THE APPLICATION CLASS
     public void start(Stage pStage){
         Scene scene = new Scene(getPane(),450,200);
         pStage.setTitle("BUTTON DEMO");

@@ -1,8 +1,8 @@
 /**
- * Program:     Check Box Demo
- * Developer:   Koleman Pa
- * Date:        2/26/2019
- * Problem:     
+ * Program:             RadioButotnDemo
+ * Developer:   `       Koleman Pa
+ * Date:                2/21/19
+*
  */
 
 import javafx.geometry.Insets;
@@ -11,62 +11,54 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import java.util.Scanner;
 
-public class RadioButtonDemo extends CheckBoxDemo{
-    @Override
-    protected BorderPane getPane(){
-        BorderPane pane = super.getPane();
-        
-        VBox paneForRBt = new VBox(20);
-        paneForRBt.setPadding(new Insets(5,5,5,5));
-        paneForRBt.setStyle("-fx.border-width: 2px; -fx-border-color: green");
-        
-        // create the radio buttons
-        RadioButton rbRed = new RadioButton("Red");
-        RadioButton rbGreen = new RadioButton("green");
-        RadioButton rbBlue = new RadioButton("Blue");
-        paneForRBt.getChildren().addAll(rbRed,rbGreen,rbBlue);
-        
-        //Create the toggle group = radio button group
-        ToggleGroup group = new ToggleGroup();
-        rbRed.setToggleGroup(group);
-        rbGreen.setToggleGroup(group);
-        rbBlue.setToggleGroup(group);
-        
-        pane.setLeft(paneForRBt);
-        
-        //Set up action Event
-       rbRed.setOnAction(e ->{
-            if(rbRed.isSelected()){
-                System.out.println("ACTION EVENT IS RED");
-           text.setFill(Color.RED);                 
-            }     
-       }); 
-       
-            rbGreen.setOnAction(e ->{
-            if (rbGreen.isSelected()){
-                System.out.println("ACTION EVENT IS GREEN");
-                text.setFill(Color.GREEN);
-            }                
-            });
-            
-            rbBlue.setOnAction(e->{
-            if(rbBlue.isSelected()){
-                System.out.println("ACTION EVENT IS BLUE");
-                text.setFill(Color.BLUE);
-            }                
-            });
-
-       //Complete lambda expression
-        
-        return pane;
-    }
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Please enter a string");
-        String txt = sc.nextLine();
-        launch(args);
-    }
+public class RadioButtonDemo extends CheckBoxDemo {
+  @Override // Override the getPane() method in the super class
+  protected BorderPane getPane() {
+    BorderPane pane = super.getPane();
     
+    VBox paneForRadioButtons = new VBox(20);
+    paneForRadioButtons.setPadding(new Insets(5, 5, 5, 5)); 
+    paneForRadioButtons.setStyle
+      ("-fx-border-width: 2px; -fx-border-color: green");
+
+    RadioButton rbRed = new RadioButton("PURPLE");                      //SETS the text for rbRED to purple
+    RadioButton rbGreen = new RadioButton("YELLOWGREEN");               // sets the text for rbGreen to YELLOWGREEN
+    RadioButton rbBlue = new RadioButton("AQUAMARINE");                 // Sets the text for rbBlue to AQUAMARINE
+    paneForRadioButtons.getChildren().addAll(rbRed, rbGreen, rbBlue);
+    pane.setLeft(paneForRadioButtons);
+
+    ToggleGroup group = new ToggleGroup();                              // adds all the buttons to the group "group"
+    rbRed.setToggleGroup(group);
+    rbGreen.setToggleGroup(group);
+    rbBlue.setToggleGroup(group);
+    
+    rbRed.setOnAction(e -> {
+      if (rbRed.isSelected()) {
+        text.setFill(Color.PURPLE);                                                 // sets the button value to PURPLE
+      }
+    });
+    
+    rbGreen.setOnAction(e -> {
+      if (rbGreen.isSelected()) {
+        text.setFill(Color.YELLOWGREEN);                                // sets the button to yellowgreen
+      }
+    });
+
+    rbBlue.setOnAction(e -> {
+      if (rbBlue.isSelected()) {
+        text.setFill(Color.AQUAMARINE);                                 // sets the button to aquamarine
+      }
+    });
+    
+    return pane;
+  }
+
+  /**
+   * The main method is only needed for the IDE with limited
+   * JavaFX support. Not needed for running from the command line.
+   */
+  public static void main(String[] args) {
+    launch(args);                                                   // launches it
+  }
 }
