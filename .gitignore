@@ -21,3 +21,36 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+/testJavaFx/nbproject/private/
+/testJavaFx/build/
+/testJavaFx/dist/
+/Listing14_1/nbproject/private/
+/Listing14_1/build/
+/Listing14_2/nbproject/private/
+/Listing14_2/build/
+/Listing14_3/nbproject/private/
+/Listing14_3/build/
+/JavaFXApplication2/nbproject/private/
+/JavaFXApplication2/dist/
+/JavaFXApplication2/build/
+/Listing14_4/nbproject/private/
+/Listing14_4/build/
+/Listing15_1/nbproject/private/
+/Listing15_1/build/
+/Listing15_2/nbproject/private/
+/Listing15_2/build/
+/CalendarApp.java/nbproject/private/
+/CalendarApp.java/build/
+/Listing15_12/nbproject/private/
+/Listing15_12/build/
+/Listing16_1/nbproject/private/
+/JavaApplication20/nbproject/private/
+/JavaApplication21/nbproject/private/
+/Listing16_1/build/
+/Listing16_2/nbproject/private/
+/Listing16_2/build/
+/Listing16_3/nbproject/private/
+/Listing16_3/build/
+/Listing16_4/nbproject/private/
+/Listing16_4/build/
+/Listing16_4/dist/
