@@ -19,6 +19,8 @@ public class JavaFXApplication4 extends Application {
     
     @Override
     public void start(Stage primaryStage) {
+// good code - could be improved by using methods for each component
+        
         //Creates the head of the man
         Circle circle = new Circle(50);
         circle.relocate(675,250);
