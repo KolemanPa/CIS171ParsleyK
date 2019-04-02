@@ -73,7 +73,7 @@ public class findingAllPrimNums  extends Application{
         System.out.println(" There Are "+counter+ " Prime Numbers");
     }
         public static void main(String[] args) {
-            getTIme(1000);
+            getTIme(1000000);
             launch(args);
 //        Scanner sc = new Scanner(System.in);
 //        System.out.println("Please Enter a number");
