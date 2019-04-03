@@ -8,7 +8,8 @@ import java.util.Scanner;
  */
 
 public class SieveOfEratosthenes extends ExecutionTime{
-  public static void main(String[] args) {
+    public static void test(int temp){
+        
     Scanner input = new Scanner(System.in);
     System.out.print("Find all prime numbers <= n, enter n: ");
     int n = 18000000;
@@ -48,5 +49,7 @@ public class SieveOfEratosthenes extends ExecutionTime{
       long sieveTime = (endTime-startTime);
       System.out.println(sieveTime);
 
+    }
+  public static void main(String[] args) {
   }
 }

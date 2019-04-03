@@ -4,18 +4,23 @@
  * and open the template in the editor.
  */
 
+
+import java.util.Scanner;
 public class ExecutionTime {
           public static void main(String[] args) {
+              System.out.println("Whate number are we calculating till?");
+              Scanner sc = new Scanner(System.in);
+              int num = sc.nextInt();
               long startPrimeTime = System.currentTimeMillis();
-              ExecutionPrime.main(args);
+              ExecutionPrime.test(num);
               long endPrimeTime = System.currentTimeMillis();
               
               long startEffPrime = System.currentTimeMillis();
-              ExecutionEffPrime.main(args);
+              ExecutionEffPrime.test(num);
               long endEffPrime = System.currentTimeMillis();
               
               long startSievePrime = System.currentTimeMillis();
-              SieveOfEratosthenes.main(args);
+              SieveOfEratosthenes.test(num);
               long endSievePrime = System.currentTimeMillis();
               
               

@@ -7,10 +7,11 @@ import java.util.Scanner;
  * @author kp0885055
  */
 public class ExecutionEffPrime extends ExecutionTime{
-  public static void main(String[] args) {
+    public static void test(int temp){
+        
     Scanner input = new Scanner(System.in);
     System.out.print("Find all prime numbers <= n, enter n: ");
-    int n = 18000000;
+    int n = temp;
     long startTime = System.currentTimeMillis();
 
     // A list to hold prime numbers
@@ -61,6 +62,9 @@ public class ExecutionEffPrime extends ExecutionTime{
     long endTime = System.currentTimeMillis();
       System.out.println("Execution Time took " +(endTime-startTime)+ " Milliseconds");
       long efficientPrimeTime = (endTime-startTime);
+    }
+  public static void main(String[] args) {
+      test(111);
   }
 }
 
