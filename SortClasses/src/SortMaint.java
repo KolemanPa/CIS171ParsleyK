@@ -28,4 +28,16 @@ public class SortMaint {
             }   // end for loop
             System.out.println("\n-----END ARRAY PRINT--------");
         }
+        
+        public static int[] insertionSort(int[] list){
+            for (int i = 1; i <list.length; i++){
+                int current = list[i];
+                int k;
+                for(k = i-1; k >=0; k--){
+                    list[k+1] = list[k];
+                }
+                list[k+1] = current;
+            }
+            return list;
+        }
 }

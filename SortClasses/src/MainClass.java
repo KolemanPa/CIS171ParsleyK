@@ -10,11 +10,16 @@ public class MainClass {
     public static void main(String[] args) {
         InstMaint runOne = new InstMaint(100);
         runOne.randomArray();
-        runOne.printArray();
-        InstMaint runTwo = new InstMaint(1000);
-        runTwo.randomArray();
-        runTwo.printArray();
-//        int[] theArray = SortMaint.randomArray(100);
+        runOne.insertionSort();
+        
+        
+        runOne.sortedArray();
+//        InstMaint runTwo = new InstMaint(1000);
+//        
+//        runTwo.randomArray();
+//        runTwo.insertionSort();
+//        runTwo.printArray();
+////        int[] theArray = SortMaint.randomArray(100);
 //        SortMaint.printArray(theArray);
         
         //OR

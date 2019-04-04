@@ -7,6 +7,7 @@
 public class InstMaint {
     
     private int[] instArray;
+    private int[] sortedArray;
     private int size;
     public InstMaint(int size){
         instArray = new int[size];
@@ -18,7 +19,16 @@ public class InstMaint {
     }
     public void printArray(){
         SortMaint.printArray(instArray);
-        
+    }
+
+    public void sortedArray(){
+        SortMaint.printArray(instArray);
+    }
+    
+    
+    public void insertionSort(){
+        sortedArray = instArray.clone();
+        instArray = SortMaint.insertionSort(sortedArray);
     }
     
 }
