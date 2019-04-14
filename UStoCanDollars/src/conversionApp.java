@@ -41,7 +41,7 @@ public class conversionApp extends Application{
         // SETS alignemnt for AmericanDOllars pane in main pane
         pane.setTop(paneForAmericanDollars);
         
-        
+//* This action event could calculate the converted value? Maybe call a method to do the work?        
         
         // Adds an action to text field
         fieldForAmericanDollars.setOnAction(e -> fieldForCanadianDollars.setText(fieldForAmericanDollars.getText()));
