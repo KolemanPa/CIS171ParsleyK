@@ -20,6 +20,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -29,6 +30,7 @@ import javafx.stage.Stage;
  */
 public class BlackApp extends Application {
 
+    Stage window;
     // creates 4 decks
     List<Image> deck1 = new ArrayList<Image>();
     List<Image> deck2 = new ArrayList<Image>();
@@ -62,6 +64,8 @@ public class BlackApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        window = primaryStage;
+        
         // loads 4 decks with cards
         deck1 = load(deck1);
         deck2 = load(deck2);
@@ -69,9 +73,15 @@ public class BlackApp extends Application {
         deck4 = load(deck4);
         primaryStage.setTitle("Shuffling Deck Program");
 
+
         BorderPane bPane1 = new BorderPane();
+        BorderPane mainbPane = new BorderPane();
+
         HBox pane1 = new HBox(10);
         HBox pane2 = new HBox(10);
+        HBox pane3 = new HBox(10);
+        HBox welcomeMsg = new HBox(10);
+        HBox startHbox = new HBox(10);
 
         ImageView view0 = new ImageView(deck1.get(0));
         ImageView view1 = new ImageView(deck1.get(1));
@@ -79,6 +89,9 @@ public class BlackApp extends Application {
         ImageView view3 = new ImageView(deck1.get(3));
 
         Button refresh = new Button("Refresh");
+        Button startGame = new Button("start Game");
+        Label welcome = new Label("Hi welcome to blackJack created by Koleman Parsley", startGame);
+
 
         refresh.setOnAction(e -> {
 
@@ -93,16 +106,26 @@ public class BlackApp extends Application {
 
         pane1.setAlignment(Pos.CENTER);
         pane2.setAlignment(Pos.CENTER);
+        pane3.setAlignment(Pos.CENTER);
+        startHbox.setAlignment(Pos.CENTER);
+
+
 
         pane1.getChildren().addAll(view0, view1, view2, view3);
-        pane2.getChildren().addAll(refresh, view3);
+        pane2.getChildren().addAll(refresh);
+        pane3.getChildren().addAll(startGame);
 
         bPane1.setCenter(pane1);
         bPane1.setBottom(pane2);
-        bPane1.setTop(view3);
+//        mainbPane.setBottom(pane3);
 
+//        mainbPane.setCenter(welcomeMsg);
+//        mainbPane.setBottom(startHbox);
         Scene scene1 = new Scene(bPane1, 600, 650);
-        primaryStage.setScene(scene1);
+        Scene welcomeScene = new Scene(welcome, 600, 650);
+        startGame.setOnAction(e -> window.setScene(scene1));
+
+        primaryStage.setScene(welcomeScene);
         primaryStage.show();
 
     }
