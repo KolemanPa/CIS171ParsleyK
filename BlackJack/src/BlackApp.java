@@ -1,6 +1,9 @@
 
 // IMPORTS
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import javafx.application.Application;
@@ -26,63 +29,65 @@ import javafx.stage.Stage;
  */
 public class BlackApp extends Application {
 
-    List<Image> deck = new ArrayList<Image>();
-        int count;
+    // creates 4 decks
+    List<Image> deck1 = new ArrayList<Image>();
+    List<Image> deck2 = new ArrayList<Image>();
+    List<Image> deck3 = new ArrayList<Image>();
+    List<Image> deck4 = new ArrayList<Image>();
 
-    public void load() {
-        for (int i = 0; i < 13; i++) {
-            deck.add(new Image("file:images/c" + (i + 1) + ".png"));
-            System.out.println("file:images/c" + (i + 1) + ".png");
-            count++;
+    //makes sure each class has 40 number cards
+    int count;
 
-        }
-        for (int j = 0; j < 13; j++) {
-            deck.add(new Image("file:images/d" + (j + 1) + ".png"));
-//            deck.add().getClass().getResource("images/d"+(j+1)+".png");
-            System.out.println("file:images/c" + (j + 1) + ".png");
-            count++;
-        }
-        for (int k = 0; k < 13; k++) {
-            deck.add(new Image("file:images/h" + (k + 1) + ".png"));
-            System.out.println("file:images/c" + (k + 1) + ".png");
-            count++;
+    // creates the prefixes for decks
+    List<String> prefix = Arrays.asList("c", "d", "h", "s");
+    List<String> prefixFace = Arrays.asList("j", "q", "k");
 
-        }
-        for (int l = 0; l < 13; l++) {
-            deck.add(new Image("file:images/s" + (l + 1) + ".png"));
-            System.out.println("file:images/c" + (l + 1) + ".png");
-            count++;
-        }
+    public List load(List<Image> newDeck) {
+        count = 0;
+        for (int i = 0; i < 4; i++) {
+            for (int k = 0; k < 10; k++) {
+                newDeck.add(new Image("images/" + prefix.get(i) + "" + (k + 1) + ".png"));
+                count++;
+            }// end number card for loop
+            for (int l = 0; l < 3; l++) {
+                newDeck.add(new Image("images/" + prefix.get(l) + "" + prefixFace.get(l) + ".png"));
+                count++;
+            }// end face card for loop
+        }// end deck for loop
+//        
         System.out.println(count);
+        Collections.shuffle(newDeck);
+        return newDeck;
     }
 
     @Override
     public void start(Stage primaryStage) {
-
-        load();
-
+        // loads 4 decks with cards
+        deck1 = load(deck1);
+        deck2 = load(deck2);
+        deck3 = load(deck3);
+        deck4 = load(deck4);
         primaryStage.setTitle("Shuffling Deck Program");
 
         BorderPane bPane1 = new BorderPane();
         HBox pane1 = new HBox(10);
         HBox pane2 = new HBox(10);
 
-        ImageView view0 = new ImageView(deck.get(0));
-        ImageView view1 = new ImageView(deck.get(1));
-        ImageView view2 = new ImageView(deck.get(2));
-//        ImageView view3 = new ImageView(deck.get(3));
-        ImageView view3 = new ImageView("images/c1.png");
+        ImageView view0 = new ImageView(deck1.get(0));
+        ImageView view1 = new ImageView(deck1.get(1));
+        ImageView view2 = new ImageView(deck1.get(2));
+        ImageView view3 = new ImageView(deck1.get(3));
 
         Button refresh = new Button("Refresh");
 
         refresh.setOnAction(e -> {
 
-            Collections.shuffle(deck);
+            Collections.shuffle(deck1);
 
-            view0.setImage(deck.get(0));
-            view1.setImage(deck.get(1));
-            view2.setImage(deck.get(2));
-            view3.setImage(deck.get(3));
+            view0.setImage(deck1.get(0));
+            view1.setImage(deck1.get(1));
+            view2.setImage(deck1.get(2));
+            view3.setImage(deck1.get(3));
 
         });
 
