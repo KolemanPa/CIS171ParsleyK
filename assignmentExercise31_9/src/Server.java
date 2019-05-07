@@ -89,7 +89,7 @@ public class Server extends Application {
             try{
                 // Get radius from text field
                 String text = (mF.getText().trim());
-                // Send to server
+                // Send to client
                 toClient.writeUTF(text);
                 toClient.flush();
                 
