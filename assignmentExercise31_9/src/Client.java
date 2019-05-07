@@ -56,7 +56,8 @@ public class Client extends Application {
                 String msg = fromServer.readUTF();
                 // Display to text area
                 mA.appendText("Person > " + msg + "\n");
-            } catch (IOException ex) {
+            } 
+            catch (IOException ex) {
                 System.err.println(ex);
             }
         });
