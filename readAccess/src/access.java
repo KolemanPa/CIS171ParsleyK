@@ -10,7 +10,6 @@ import java.sql.Statement;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author kp0885055
@@ -18,91 +17,40 @@ import java.sql.Statement;
 public class access {
 
     public static void main(String[] args) throws ClassNotFoundException {
-        
+
         try {
             Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+//            Class.forName("sun.jdcbc.odbc.JdbcOdbcDriver");
+            System.out.println("Loaded");
+        } catch (ClassNotFoundException cnfex) {
+
+            System.out.println("Problem in loading or registering MS Access JDBC driver");
         }
-        catch(ClassNotFoundException cnfex) {
 
-            System.out.println("Problem in loading or "
-                    + "registering MS Access JDBC driver");
+        // Access the access database
+        try {
+            String fileName = "C:\\Users\\kp0885055\\Desktop\\CIS171ParsleyK\\readAccess\\src\\StudentEnrollment.accdb";
+            String dbURL = "jdbc:ucanaccess://";
+            System.out.println(fileName);
+
+            // Connect to DB
+            Connection conn = DriverManager.getConnection(dbURL + fileName);
+            System.out.println("Db Connected");
+
+            Statement sqlStatement = conn.createStatement();            // Statement object NEEDS connection
+            // Execute SQL statement
+            ResultSet resultSet = sqlStatement.executeQuery("select firstName, mi, lastName from Students where lastName = 'Smith'");
+            // Iterate through the results and print the student names
+            while (resultSet.next()) {
+                System.out.println(resultSet.getString(1) + "\t" + resultSet.getString(2) + "\t" + resultSet.getString(3));
+            }
+            conn.close();
+        } catch (Exception cnfex) {
+            System.out.println("Problem in loading or registering MS Access JDBC driver");
+            System.out.println(cnfex.getMessage());
+
         }
 
 
-
-
-
-
-
-
-
-
-
-
-//
-//        // variables
-//        Connection connection = null;
-//        Statement statement = null;
-//        ResultSet resultSet = null;
-//
-//        // Step 1: Loading or registering Oracle JDBC driver class
-//        try {
-//
-//            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-//        }
-//        catch(ClassNotFoundException cnfex) {
-//
-//            System.out.println("Problem in loading or "
-//                    + "registering MS Access JDBC driver");
-//            cnfex.printStackTrace();
-//        }
-//
-//        // Step 2: Opening database connection
-//        try {
-//
-//            String msAccDB = "C:\\Users\\kp0885055\\Desktop\\CIS171ParsleyK\\readAccess\\src";
-//            String dbURL = "jdbc:ucanaccess://" + msAccDB; 
-//
-//            // Step 2.A: Create and get connection using DriverManager class
-//            connection = DriverManager.getConnection(dbURL); 
-//
-//            // Step 2.B: Creating JDBC Statement 
-//            statement = connection.createStatement();
-//
-//            // Step 2.C: Executing SQL & retrieve data into ResultSet
-//            resultSet = statement.executeQuery("SELECT * FROM PLAYER");
-//
-//            System.out.println("ID\tName\t\t\tAge\tMatches");
-//            System.out.println("==\t================\t===\t=======");
-//
-//            // processing returned data and printing into console
-//            while(resultSet.next()) {
-//                System.out.println(resultSet.getInt(1) + "\t" + 
-//                        resultSet.getString(2) + "\t" + 
-//                        resultSet.getString(3) + "\t" +
-//                        resultSet.getString(4));
-//            }
-//        }
-//        catch(SQLException sqlex){
-//            sqlex.printStackTrace();
-//        }
-//        finally {
-//
-//            // Step 3: Closing database connection
-//            try {
-//                if(null != connection) {
-//
-//                    // cleanup resources, once after processing
-//                    resultSet.close();
-//                    statement.close();
-//
-//                    // and then finally close connection
-//                    connection.close();
-//                }
-//            }
-//            catch (SQLException sqlex) {
-//                sqlex.printStackTrace();
-//            }
-//        }
     }
 }

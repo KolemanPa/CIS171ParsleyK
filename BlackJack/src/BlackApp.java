@@ -37,6 +37,11 @@ public class BlackApp extends Application {
     List<Image> deck3 = new ArrayList<Image>();
     List<Image> deck4 = new ArrayList<Image>();
 
+    RadioButton oneDeck = new RadioButton("1 deck");
+    RadioButton twoDeck = new RadioButton("2 deck");
+    RadioButton threeDeck = new RadioButton("3 deck");
+    RadioButton fourDeck = new RadioButton("4 deck");
+
     //makes sure each class has 40 number cards
     int count;
 
@@ -44,38 +49,27 @@ public class BlackApp extends Application {
     List<String> prefix = Arrays.asList("c", "d", "h", "s");
     List<String> prefixFace = Arrays.asList("j", "q", "k");
 
-    public List load(List<Image> newDeck) {
-        count = 0;
-        for (int i = 0; i < 4; i++) {
-            for (int k = 0; k < 10; k++) {
-                newDeck.add(new Image("images/" + prefix.get(i) + "" + (k + 1) + ".png"));
-                count++;
-            }// end number card for loop
-            for (int l = 0; l < 3; l++) {
-                newDeck.add(new Image("images/" + prefix.get(l) + "" + prefixFace.get(l) + ".png"));
-                count++;
-            }// end face card for loop
-        }// end deck for loop
-//        
-        System.out.println(count);
-        Collections.shuffle(newDeck);
-        return newDeck;
-    }
-
     @Override
     public void start(Stage primaryStage) {
         window = primaryStage;
-        
+
         // loads 4 decks with cards
-        deck1 = load(deck1);
-        deck2 = load(deck2);
-        deck3 = load(deck3);
-        deck4 = load(deck4);
         primaryStage.setTitle("Shuffling Deck Program");
 
+        // Radio Button for rules page
+        ToggleGroup amntOfDecks = new ToggleGroup();
+        oneDeck.setToggleGroup(amntOfDecks);
+        twoDeck.setToggleGroup(amntOfDecks);
+        threeDeck.setToggleGroup(amntOfDecks);
+        fourDeck.setToggleGroup(amntOfDecks);
 
+        HBox deckBox = new HBox(15);
+        deckBox.getChildren().addAll(new Label("How many Decks?:     "), oneDeck, twoDeck, threeDeck, fourDeck);
+        deckBox.setAlignment(Pos.BOTTOM_CENTER);
+        
         BorderPane bPane1 = new BorderPane();
         BorderPane mainbPane = new BorderPane();
+        BorderPane chooseRules = new BorderPane();
 
         HBox pane1 = new HBox(10);
         HBox pane2 = new HBox(10);
@@ -83,15 +77,18 @@ public class BlackApp extends Application {
         HBox welcomeMsg = new HBox(10);
         HBox startHbox = new HBox(10);
 
-        ImageView view0 = new ImageView(deck1.get(0));
-        ImageView view1 = new ImageView(deck1.get(1));
-        ImageView view2 = new ImageView(deck1.get(2));
-        ImageView view3 = new ImageView(deck1.get(3));
+        ImageView view0 = new ImageView();
+        ImageView view1 = new ImageView();
+        ImageView view2 = new ImageView();
+        ImageView view3 = new ImageView();
 
         Button refresh = new Button("Refresh");
-        Button startGame = new Button("start Game");
-        Label welcome = new Label("Hi welcome to blackJack created by Koleman Parsley", startGame);
-
+        Button chooseRulesbtn = new Button("Choose Rules");
+        Button startGame = new Button("Start Game");
+        mainbPane.setCenter(new Label("Hi welcome to Black Jack created by Koleman Parsley"));
+        mainbPane.setBottom(chooseRulesbtn);
+        chooseRules.setBottom(startGame);
+        chooseRules.setTop(deckBox);
 
         refresh.setOnAction(e -> {
 
@@ -109,21 +106,25 @@ public class BlackApp extends Application {
         pane3.setAlignment(Pos.CENTER);
         startHbox.setAlignment(Pos.CENTER);
 
-
-
         pane1.getChildren().addAll(view0, view1, view2, view3);
         pane2.getChildren().addAll(refresh);
-        pane3.getChildren().addAll(startGame);
+        pane3.getChildren().addAll(chooseRulesbtn);
 
+        mainbPane.setBottom(pane3);
         bPane1.setCenter(pane1);
         bPane1.setBottom(pane2);
-//        mainbPane.setBottom(pane3);
+        mainbPane.setBottom(pane3);
 
-//        mainbPane.setCenter(welcomeMsg);
-//        mainbPane.setBottom(startHbox);
+        mainbPane.setCenter(welcomeMsg);
         Scene scene1 = new Scene(bPane1, 600, 650);
-        Scene welcomeScene = new Scene(welcome, 600, 650);
-        startGame.setOnAction(e -> window.setScene(scene1));
+        Scene welcomeScene = new Scene(mainbPane, 600, 650);
+        Scene chooseRulesScn = new Scene(chooseRules, 600,650);
+        chooseRulesbtn.setOnAction(e -> window.setScene(chooseRulesScn));
+        startGame.setOnAction(e -> {
+           setDeckNum();
+           
+           window.setScene(scene1);
+        });
 
         primaryStage.setScene(welcomeScene);
         primaryStage.show();
@@ -132,5 +133,54 @@ public class BlackApp extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public void setDeckNum() {
+        if (oneDeck.isSelected()) {
+            setDecks(1);
+        } else if (twoDeck.isSelected()) {
+            setDecks(2);
+        } else if (threeDeck.isSelected()) {
+            setDecks(3);
+        } else {
+            setDecks(4);
+        }
+    }
+
+    public void setDecks(Integer amntDecks) {
+        if (amntDecks == 1) {
+            deck1 = load(deck1);
+
+        } else if (amntDecks == 2) {
+            deck1 = load(deck1);
+            deck2 = load(deck2);
+        } else if (amntDecks == 3) {
+            deck1 = load(deck1);
+            deck2 = load(deck2);
+            deck3 = load(deck3);
+        } else if (amntDecks == 4) {
+            deck1 = load(deck1);
+            deck2 = load(deck2);
+            deck3 = load(deck3);
+            deck4 = load(deck4);
+        }
+    }
+
+    public List load(List<Image> newDeck) {
+        count = 0;
+        for (int i = 0; i < 4; i++) {
+            for (int k = 0; k < 10; k++) {
+                newDeck.add(new Image("images/" + prefix.get(i) + "" + (k + 1) + ".png"));
+                count++;
+            }// end number card for loop
+            for (int l = 0; l < 3; l++) {
+                newDeck.add(new Image("images/" + prefix.get(l) + "" + prefixFace.get(l) + ".png"));
+                count++;
+            }// end face card for loop
+        }// end deck for loop
+//        
+        System.out.println(count);
+        Collections.shuffle(newDeck);
+        return newDeck;
     }
 }
