@@ -36,11 +36,13 @@ public class BlackApp extends Application {
     List<Image> deck2 = new ArrayList<Image>();
     List<Image> deck3 = new ArrayList<Image>();
     List<Image> deck4 = new ArrayList<Image>();
+    List<Image> mainDeck = new ArrayList<Image>();
 
     RadioButton oneDeck = new RadioButton("1 deck");
     RadioButton twoDeck = new RadioButton("2 deck");
     RadioButton threeDeck = new RadioButton("3 deck");
     RadioButton fourDeck = new RadioButton("4 deck");
+    int cardsInHand = 2;
 
     //makes sure each class has 40 number cards
     int count;
@@ -66,10 +68,11 @@ public class BlackApp extends Application {
         HBox deckBox = new HBox(15);
         deckBox.getChildren().addAll(new Label("How many Decks?:     "), oneDeck, twoDeck, threeDeck, fourDeck);
         deckBox.setAlignment(Pos.BOTTOM_CENTER);
-        
-        BorderPane bPane1 = new BorderPane();
+
         BorderPane mainbPane = new BorderPane();
         BorderPane chooseRules = new BorderPane();
+        BorderPane gamebPane = new BorderPane();
+        BorderPane buttons = new BorderPane();
 
         HBox pane1 = new HBox(10);
         HBox pane2 = new HBox(10);
@@ -77,54 +80,85 @@ public class BlackApp extends Application {
         HBox welcomeMsg = new HBox(10);
         HBox startHbox = new HBox(10);
 
+        // Image views for decks
         ImageView view0 = new ImageView();
         ImageView view1 = new ImageView();
         ImageView view2 = new ImageView();
         ImageView view3 = new ImageView();
+        ImageView view4 = new ImageView();
 
-        Button refresh = new Button("Refresh");
+        Button shuffle = new Button("Refresh");
         Button chooseRulesbtn = new Button("Choose Rules");
         Button startGame = new Button("Start Game");
+        Button hitMe = new Button("hit Me");
+        Button end = new Button("End");
         mainbPane.setCenter(new Label("Hi welcome to Black Jack created by Koleman Parsley"));
         mainbPane.setBottom(chooseRulesbtn);
         chooseRules.setBottom(startGame);
         chooseRules.setTop(deckBox);
 
-        refresh.setOnAction(e -> {
-
-            Collections.shuffle(deck1);
-
-            view0.setImage(deck1.get(0));
-            view1.setImage(deck1.get(1));
-            view2.setImage(deck1.get(2));
-            view3.setImage(deck1.get(3));
-
-        });
-
         pane1.setAlignment(Pos.CENTER);
         pane2.setAlignment(Pos.CENTER);
         pane3.setAlignment(Pos.CENTER);
         startHbox.setAlignment(Pos.CENTER);
+        hitMe.setAlignment(Pos.BOTTOM_CENTER);
+        end.setAlignment(Pos.TOP_CENTER);
 
-        pane1.getChildren().addAll(view0, view1, view2, view3);
-        pane2.getChildren().addAll(refresh);
+        pane1.getChildren().addAll(view0, view1, view2, view3, view4);
+        pane2.getChildren().addAll(shuffle);
         pane3.getChildren().addAll(chooseRulesbtn);
 
         mainbPane.setBottom(pane3);
-        bPane1.setCenter(pane1);
-        bPane1.setBottom(pane2);
-        mainbPane.setBottom(pane3);
 
+        buttons.setCenter(hitMe);
+        buttons.setBottom(end);
+        
         mainbPane.setCenter(welcomeMsg);
-        Scene scene1 = new Scene(bPane1, 600, 650);
         Scene welcomeScene = new Scene(mainbPane, 600, 650);
-        Scene chooseRulesScn = new Scene(chooseRules, 600,650);
+               welcomeScene.getStylesheets().add("style.css");
+        Scene chooseRulesScn = new Scene(chooseRules, 600, 650);
+               chooseRulesScn.getStylesheets().add("style.css");
+        Scene game = new Scene(gamebPane, 600, 650);
+               game.getStylesheets().add("style.css");
         chooseRulesbtn.setOnAction(e -> window.setScene(chooseRulesScn));
+
+        // ACtions
         startGame.setOnAction(e -> {
-           setDeckNum();
-           
-           window.setScene(scene1);
+            setDeckNum();
+
+            window.setScene(game);
+                        gamebPane.setCenter(null);
+            gamebPane.setRight(buttons);
+            gamebPane.setCenter(pane1);
+            view0.setImage(mainDeck.get(0));
+            view1.setImage(mainDeck.get(1));
+            
         });
+
+        shuffle.setOnAction(e -> {
+
+            Collections.shuffle(mainDeck);
+
+            System.out.println("Shuffled");
+        });
+
+        hitMe.setOnAction(e -> {
+
+            if (cardsInHand == 2) {
+                view2.setImage(mainDeck.get(2));
+                cardsInHand++;
+            }
+           else if (cardsInHand == 3) {
+                view3.setImage(mainDeck.get(3));
+                cardsInHand++;
+            }
+           else if (cardsInHand == 4) {
+                view4.setImage(mainDeck.get(4));
+                cardsInHand++;
+            }
+
+        });
+
 
         primaryStage.setScene(welcomeScene);
         primaryStage.show();
@@ -150,19 +184,36 @@ public class BlackApp extends Application {
     public void setDecks(Integer amntDecks) {
         if (amntDecks == 1) {
             deck1 = load(deck1);
+            mainDeck.addAll(deck1);
+            Collections.shuffle(mainDeck);
 
         } else if (amntDecks == 2) {
             deck1 = load(deck1);
             deck2 = load(deck2);
+            mainDeck.addAll(deck1);
+            mainDeck.addAll(deck2);
+            Collections.shuffle(mainDeck);
+
         } else if (amntDecks == 3) {
             deck1 = load(deck1);
             deck2 = load(deck2);
             deck3 = load(deck3);
+            mainDeck.addAll(deck1);
+            mainDeck.addAll(deck2);
+            mainDeck.addAll(deck3);
+            Collections.shuffle(mainDeck);
+
         } else if (amntDecks == 4) {
             deck1 = load(deck1);
             deck2 = load(deck2);
             deck3 = load(deck3);
             deck4 = load(deck4);
+            mainDeck.addAll(deck1);
+            mainDeck.addAll(deck2);
+            mainDeck.addAll(deck3);
+            mainDeck.addAll(deck4);
+            Collections.shuffle(mainDeck);
+
         }
     }
 

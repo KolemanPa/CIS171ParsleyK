@@ -1,0 +1,63 @@
+/* sets the background image */
+
+.root{
+    -fx-background-image: url("background.jpg");
+}
+/* Styles the buttons */
+.button {
+    -fx-text-fill: #009743;
+    -fx-font-family: "Arial Narrow";
+    -fx-font-weight: bold;
+    -fx-background-color: #FFCB0A;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
+
+/* Styles the labels */
+.label{
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+
+
+
+/* Radio button styles */
+.radio-button {
+    -fx-font-family: "Arial";
+    -fx-font-size: 11;
+    -fx-text-fill: white;
+    -fx-border-width: 0px;
+}
+.radio-button .radio {
+    -fx-border-width: 1px;
+    -fx-border-color: #000;
+    -fx-background-color: white;
+    -fx-background-image: null;
+    -fx-border-radius: 15px;
+    -fx-padding: 4px;
+}
+.radio-button .radio:selected {
+    -fx-background-color: yellow;
+    -fx-background-image: null;
+}
+.radio-button -radio:armed {
+    -fx-background-color: yellow;
+    -fx-background-image: null;
+}
+.radio-button -radio:armed {
+    -fx-background-color: yellow;
+    -fx-background-image: null;
+}
+.radio-button -radio:determinate {
+    -fx-background-color: yellow;
+    -fx-background-image: null;
+}
+.radio-button -radio:indeterminate {
+    -fx-background-color: yellow;
+    -fx-background-image: null;
+}
+.radio-button .dot {
+    -fx-background-radius: 15px;
+    -fx-padding: 8px;
+}
