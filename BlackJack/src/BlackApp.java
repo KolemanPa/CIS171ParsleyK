@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -22,7 +23,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
+import java.net.*;
+import java.io.*;
 /**
  * Developer: Koleman Pa Date: 5/3/2019 Program: Black Jack Game
  *
@@ -37,6 +39,10 @@ public class BlackApp extends Application {
     List<Image> deck3 = new ArrayList<Image>();
     List<Image> deck4 = new ArrayList<Image>();
     List<Image> mainDeck = new ArrayList<Image>();
+    HashMap<Image, String> nameData = new HashMap<Image, String>();
+    
+
+    List<String> deckURL = new ArrayList<String>();
 
     RadioButton oneDeck = new RadioButton("1 deck");
     RadioButton twoDeck = new RadioButton("2 deck");
@@ -65,19 +71,20 @@ public class BlackApp extends Application {
         threeDeck.setToggleGroup(amntOfDecks);
         fourDeck.setToggleGroup(amntOfDecks);
 
-        HBox deckBox = new HBox(15);
-        deckBox.getChildren().addAll(new Label("How many Decks?:     "), oneDeck, twoDeck, threeDeck, fourDeck);
-        deckBox.setAlignment(Pos.BOTTOM_CENTER);
-
         BorderPane mainbPane = new BorderPane();
         BorderPane chooseRules = new BorderPane();
         BorderPane gamebPane = new BorderPane();
         BorderPane buttons = new BorderPane();
+        BorderPane rulesBox = new BorderPane();
+
+        HBox deckBox = new HBox(15);
+//        deckBox.getChildren().addAll(new Label("How many Decks?:     "), oneDeck, twoDeck, threeDeck, fourDeck);
+
+        deckBox.setAlignment(Pos.CENTER);
 
         HBox pane1 = new HBox(10);
         HBox pane2 = new HBox(10);
         HBox pane3 = new HBox(10);
-        HBox welcomeMsg = new HBox(10);
         HBox startHbox = new HBox(10);
 
         // Image views for decks
@@ -93,9 +100,10 @@ public class BlackApp extends Application {
         Button hitMe = new Button("hit Me");
         Button end = new Button("End");
         mainbPane.setCenter(new Label("Hi welcome to Black Jack created by Koleman Parsley"));
-        mainbPane.setBottom(chooseRulesbtn);
         chooseRules.setBottom(startGame);
-        chooseRules.setTop(deckBox);
+        deckBox.getChildren().addAll(new Label("How many Decks?:     "), oneDeck, twoDeck, threeDeck, fourDeck);
+
+        chooseRules.setCenter(deckBox);
 
         pane1.setAlignment(Pos.CENTER);
         pane2.setAlignment(Pos.CENTER);
@@ -107,32 +115,40 @@ public class BlackApp extends Application {
         pane1.getChildren().addAll(view0, view1, view2, view3, view4);
         pane2.getChildren().addAll(shuffle);
         pane3.getChildren().addAll(chooseRulesbtn);
-
+        pane3.setAlignment(Pos.CENTER);
         mainbPane.setBottom(pane3);
 
         buttons.setCenter(hitMe);
         buttons.setBottom(end);
-        
-        mainbPane.setCenter(welcomeMsg);
-        Scene welcomeScene = new Scene(mainbPane, 600, 650);
-               welcomeScene.getStylesheets().add("style.css");
-        Scene chooseRulesScn = new Scene(chooseRules, 600, 650);
-               chooseRulesScn.getStylesheets().add("style.css");
-        Scene game = new Scene(gamebPane, 600, 650);
-               game.getStylesheets().add("style.css");
-        chooseRulesbtn.setOnAction(e -> window.setScene(chooseRulesScn));
 
+        Scene welcomeScene = new Scene(mainbPane, 600, 650);
+        welcomeScene.getStylesheets().add("style.css");
+        Scene chooseRulesScn = new Scene(chooseRules, 600, 650);
+        chooseRulesScn.getStylesheets().add("style.css");
+        Scene game = new Scene(gamebPane, 600, 650);
+        game.getStylesheets().add("style.css");
+        chooseRulesbtn.setOnAction(e -> window.setScene(chooseRulesScn));
+        
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+
+        
+        for (Image card : mainDeck){
+        String path = MyImage.getUrl();
+        String name = path.substring(path.lastIndexOf("/")+1, path.lastIndexOf("."));
+        nameData.put(card, name);
+}
+        
         // ACtions
         startGame.setOnAction(e -> {
             setDeckNum();
 
             window.setScene(game);
-                        gamebPane.setCenter(null);
+            gamebPane.setCenter(null);
             gamebPane.setRight(buttons);
             gamebPane.setCenter(pane1);
             view0.setImage(mainDeck.get(0));
             view1.setImage(mainDeck.get(1));
-            
+
         });
 
         shuffle.setOnAction(e -> {
@@ -147,18 +163,19 @@ public class BlackApp extends Application {
             if (cardsInHand == 2) {
                 view2.setImage(mainDeck.get(2));
                 cardsInHand++;
-            }
-           else if (cardsInHand == 3) {
+            } else if (cardsInHand == 3) {
                 view3.setImage(mainDeck.get(3));
                 cardsInHand++;
-            }
-           else if (cardsInHand == 4) {
+            } else if (cardsInHand == 4) {
                 view4.setImage(mainDeck.get(4));
                 cardsInHand++;
             }
 
         });
 
+        end.setOnAction(e -> {
+
+        });
 
         primaryStage.setScene(welcomeScene);
         primaryStage.show();
@@ -186,6 +203,7 @@ public class BlackApp extends Application {
             deck1 = load(deck1);
             mainDeck.addAll(deck1);
             Collections.shuffle(mainDeck);
+            loadURL(deckURL, 1);
 
         } else if (amntDecks == 2) {
             deck1 = load(deck1);
@@ -193,6 +211,7 @@ public class BlackApp extends Application {
             mainDeck.addAll(deck1);
             mainDeck.addAll(deck2);
             Collections.shuffle(mainDeck);
+            loadURL(deckURL, 2);
 
         } else if (amntDecks == 3) {
             deck1 = load(deck1);
@@ -202,6 +221,7 @@ public class BlackApp extends Application {
             mainDeck.addAll(deck2);
             mainDeck.addAll(deck3);
             Collections.shuffle(mainDeck);
+            loadURL(deckURL, 3);
 
         } else if (amntDecks == 4) {
             deck1 = load(deck1);
@@ -213,6 +233,7 @@ public class BlackApp extends Application {
             mainDeck.addAll(deck3);
             mainDeck.addAll(deck4);
             Collections.shuffle(mainDeck);
+            loadURL(deckURL, 4);
 
         }
     }
@@ -234,4 +255,12 @@ public class BlackApp extends Application {
         Collections.shuffle(newDeck);
         return newDeck;
     }
+
+    public List loadURL(List<String> tempURL, int jk) {
+        for (int i = 0; i < jk; i++) {
+            tempURL.add("images/" + prefix.get(i) + "" + prefixFace.get(i) + ".png");
+        }
+        return tempURL;
+    }
 }
+
