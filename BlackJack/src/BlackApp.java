@@ -25,6 +25,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import java.net.*;
 import java.io.*;
+
 /**
  * Developer: Koleman Pa Date: 5/3/2019 Program: Black Jack Game
  *
@@ -40,7 +41,6 @@ public class BlackApp extends Application {
     List<Image> deck4 = new ArrayList<Image>();
     List<Image> mainDeck = new ArrayList<Image>();
     HashMap<Image, String> nameData = new HashMap<Image, String>();
-    
 
     List<String> deckURL = new ArrayList<String>();
 
@@ -52,6 +52,11 @@ public class BlackApp extends Application {
 
     //makes sure each class has 40 number cards
     int count;
+    int totalPoints = 0;
+
+    Boolean win = false;
+
+    int howClose;
 
     // creates the prefixes for decks
     List<String> prefix = Arrays.asList("c", "d", "h", "s");
@@ -76,6 +81,7 @@ public class BlackApp extends Application {
         BorderPane gamebPane = new BorderPane();
         BorderPane buttons = new BorderPane();
         BorderPane rulesBox = new BorderPane();
+        BorderPane youLostPane = new BorderPane();
 
         HBox deckBox = new HBox(15);
 //        deckBox.getChildren().addAll(new Label("How many Decks?:     "), oneDeck, twoDeck, threeDeck, fourDeck);
@@ -100,6 +106,7 @@ public class BlackApp extends Application {
         Button hitMe = new Button("hit Me");
         Button end = new Button("End");
         mainbPane.setCenter(new Label("Hi welcome to Black Jack created by Koleman Parsley"));
+        youLostPane.setCenter(new Label("You Lost"));
         chooseRules.setBottom(startGame);
         deckBox.getChildren().addAll(new Label("How many Decks?:     "), oneDeck, twoDeck, threeDeck, fourDeck);
 
@@ -121,6 +128,7 @@ public class BlackApp extends Application {
         buttons.setCenter(hitMe);
         buttons.setBottom(end);
 
+        Scene youLost = new Scene(youLostPane, 600, 650);
         Scene welcomeScene = new Scene(mainbPane, 600, 650);
         welcomeScene.getStylesheets().add("style.css");
         Scene chooseRulesScn = new Scene(chooseRules, 600, 650);
@@ -128,16 +136,17 @@ public class BlackApp extends Application {
         Scene game = new Scene(gamebPane, 600, 650);
         game.getStylesheets().add("style.css");
         chooseRulesbtn.setOnAction(e -> window.setScene(chooseRulesScn));
-        
+
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 
-        
-        for (Image card : mainDeck){
-        String path = MyImage.getUrl();
-        String name = path.substring(path.lastIndexOf("/")+1, path.lastIndexOf("."));
-        nameData.put(card, name);
-}
-        
+//        List<Image> mainDeck = new ArrayList<Image>();
+//        //population of the list
+//        HashMap<Image, String> nameData = new HashMap<Image, String>();
+//        for (Image card : mainDeck) {
+//            String path = card.getUrl();
+//            String name = path.substring(path.lastIndexOf("/") + 1, path.lastIndexOf("."));
+//            nameData.put(card, name);
+//        }
         // ACtions
         startGame.setOnAction(e -> {
             setDeckNum();
@@ -147,6 +156,7 @@ public class BlackApp extends Application {
             gamebPane.setRight(buttons);
             gamebPane.setCenter(pane1);
             view0.setImage(mainDeck.get(0));
+            getPoint(mainDeck.get(0).getUrl());
             view1.setImage(mainDeck.get(1));
 
         });
@@ -159,15 +169,22 @@ public class BlackApp extends Application {
         });
 
         hitMe.setOnAction(e -> {
-
-            if (cardsInHand == 2) {
+            didIWin();
+            if (win == true) {
+                window.setScene(youLost);
+            } else if (cardsInHand == 2) {
                 view2.setImage(mainDeck.get(2));
+                getPoint(mainDeck.get(2).getUrl());
                 cardsInHand++;
             } else if (cardsInHand == 3) {
                 view3.setImage(mainDeck.get(3));
+                getPoint(mainDeck.get(2).getUrl());
+
                 cardsInHand++;
             } else if (cardsInHand == 4) {
                 view4.setImage(mainDeck.get(4));
+                getPoint(mainDeck.get(2).getUrl());
+
                 cardsInHand++;
             }
 
@@ -262,5 +279,141 @@ public class BlackApp extends Application {
         }
         return tempURL;
     }
-}
 
+    public Integer getPoints(String s) {
+        int numPoints = 0;
+        s.substring(s.lastIndexOf("/") + 1, s.lastIndexOf("."));
+        if (s == "c1") {
+            numPoints = 1;
+        }
+        if (s == "c2") {
+            numPoints = 2;
+        }
+        if (s == "c3") {
+            numPoints = 3;
+        }
+        if (s == "c4") {
+            numPoints = 4;
+        }
+        if (s == "c5") {
+            numPoints = 5;
+        }
+        if (s == "c6") {
+            numPoints = 6;
+        }
+        if (s == "c7") {
+            numPoints = 7;
+        }
+        if (s == "c8") {
+            numPoints = 8;
+        }
+        if (s == "c9") {
+            numPoints = 9;
+        }
+
+        // Spades
+        if (s == "s1") {
+            numPoints = 1;
+        }
+        if (s == "s2") {
+            numPoints = 2;
+        }
+        if (s == "s3") {
+            numPoints = 3;
+        }
+        if (s == "s4") {
+            numPoints = 4;
+        }
+        if (s == "s5") {
+            numPoints = 5;
+        }
+        if (s == "s6") {
+            numPoints = 6;
+        }
+        if (s == "s7") {
+            numPoints = 7;
+        }
+        if (s == "s8") {
+            numPoints = 8;
+        }
+        if (s == "s9") {
+            numPoints = 9;
+        }
+
+        //// Hearts
+        if (s == "h1") {
+            numPoints = 1;
+        }
+        if (s == "h2") {
+            numPoints = 2;
+        }
+        if (s == "h3") {
+            numPoints = 3;
+        }
+        if (s == "h4") {
+            numPoints = 4;
+        }
+        if (s == "h5") {
+            numPoints = 5;
+        }
+        if (s == "h6") {
+            numPoints = 6;
+        }
+        if (s == "h7") {
+            numPoints = 7;
+        }
+        if (s == "h8") {
+            numPoints = 8;
+        }
+        if (s == "h9") {
+            numPoints = 9;
+        }
+
+        // Diamonds
+        if (s == "d1") {
+            numPoints = 1;
+        }
+        if (s == "d2") {
+            numPoints = 2;
+        }
+        if (s == "d3") {
+            numPoints = 3;
+        }
+        if (s == "d4") {
+            numPoints = 4;
+        }
+        if (s == "d5") {
+            numPoints = 5;
+        }
+        if (s == "d6") {
+            numPoints = 6;
+        }
+        if (s == "d7") {
+            numPoints = 7;
+        }
+        if (s == "d8") {
+            numPoints = 8;
+        }
+        if (s == "d9") {
+            numPoints = 9;
+        }
+
+        totalPoints += numPoints;
+        didIWin();
+        return numPoints;
+
+    }
+
+    public Integer getTotalPoints() {
+        return totalPoints;
+    }
+
+    public void didIWin() {
+        if (totalPoints > 21) {
+            win = true;
+        } else {
+            howClose = (21 - totalPoints);
+            win = false;
+        }
+    }
+}
