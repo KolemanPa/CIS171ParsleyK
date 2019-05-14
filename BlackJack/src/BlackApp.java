@@ -25,6 +25,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import java.net.*;
 import java.io.*;
+import java.util.Random;
 
 /**
  * Developer: Koleman Pa Date: 5/3/2019 Program: Black Jack Game
@@ -40,7 +41,11 @@ public class BlackApp extends Application {
     List<Image> deck3 = new ArrayList<Image>();
     List<Image> deck4 = new ArrayList<Image>();
     List<Image> mainDeck = new ArrayList<Image>();
+    List<String> nameDeck = new ArrayList<String>();
     HashMap<Image, String> nameData = new HashMap<Image, String>();
+
+    // USE THIS TO SHUFFLE IN SAME WAY
+    long seed = System.nanoTime();
 
     List<String> deckURL = new ArrayList<String>();
 
@@ -156,6 +161,7 @@ public class BlackApp extends Application {
             gamebPane.setRight(buttons);
             gamebPane.setCenter(pane1);
             view0.setImage(mainDeck.get(0));
+            view0.source();
             getPoint(mainDeck.get(0).getUrl());
             view1.setImage(mainDeck.get(1));
 
@@ -219,7 +225,9 @@ public class BlackApp extends Application {
         if (amntDecks == 1) {
             deck1 = load(deck1);
             mainDeck.addAll(deck1);
-            Collections.shuffle(mainDeck);
+            Collections.shuffle(mainDeck, new Random(seed));
+            Collections.shuffle(nameDeck, new Random(seed));
+            
             loadURL(deckURL, 1);
 
         } else if (amntDecks == 2) {
@@ -227,7 +235,8 @@ public class BlackApp extends Application {
             deck2 = load(deck2);
             mainDeck.addAll(deck1);
             mainDeck.addAll(deck2);
-            Collections.shuffle(mainDeck);
+            Collections.shuffle(mainDeck, new Random(seed));
+            Collections.shuffle(nameDeck, new Random(seed));
             loadURL(deckURL, 2);
 
         } else if (amntDecks == 3) {
@@ -237,7 +246,15 @@ public class BlackApp extends Application {
             mainDeck.addAll(deck1);
             mainDeck.addAll(deck2);
             mainDeck.addAll(deck3);
-            Collections.shuffle(mainDeck);
+            
+            
+            
+            // UPDATE THIS
+            mainDeck.addAll(deck1);
+            mainDeck.addAll(deck2);
+            mainDeck.addAll(deck3);
+            Collections.shuffle(mainDeck, new Random(seed));
+            Collections.shuffle(nameDeck, new Random(seed));
             loadURL(deckURL, 3);
 
         } else if (amntDecks == 4) {
@@ -249,7 +266,8 @@ public class BlackApp extends Application {
             mainDeck.addAll(deck2);
             mainDeck.addAll(deck3);
             mainDeck.addAll(deck4);
-            Collections.shuffle(mainDeck);
+            Collections.shuffle(mainDeck, new Random(seed));
+            Collections.shuffle(nameDeck, new Random(seed));
             loadURL(deckURL, 4);
 
         }
