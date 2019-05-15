@@ -43,9 +43,15 @@ public class BlackApp extends Application {
     List<Image> mainDeck = new ArrayList<Image>();
     List<String> nameDeck = new ArrayList<String>();
     HashMap<Image, String> nameData = new HashMap<Image, String>();
+    List<String> name1 = new ArrayList<String>();
+    List<String> name2 = new ArrayList<String>();
+    List<String> name3 = new ArrayList<String>();
+    List<String> name4 = new ArrayList<String>();
 
     // USE THIS TO SHUFFLE IN SAME WAY
     long seed = System.nanoTime();
+    boolean didYouLoose = false;
+    
 
     List<String> deckURL = new ArrayList<String>();
 
@@ -70,7 +76,7 @@ public class BlackApp extends Application {
     @Override
     public void start(Stage primaryStage) {
         window = primaryStage;
-
+    
         // loads 4 decks with cards
         primaryStage.setTitle("Shuffling Deck Program");
 
@@ -140,6 +146,7 @@ public class BlackApp extends Application {
         chooseRulesScn.getStylesheets().add("style.css");
         Scene game = new Scene(gamebPane, 600, 650);
         game.getStylesheets().add("style.css");
+
         chooseRulesbtn.setOnAction(e -> window.setScene(chooseRulesScn));
 
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
@@ -155,21 +162,18 @@ public class BlackApp extends Application {
         // ACtions
         startGame.setOnAction(e -> {
             setDeckNum();
-
             window.setScene(game);
             gamebPane.setCenter(null);
             gamebPane.setRight(buttons);
             gamebPane.setCenter(pane1);
             view0.setImage(mainDeck.get(0));
-            view0.source();
-            getPoint(mainDeck.get(0).getUrl());
+            getPoints(nameDeck.get(0));
             view1.setImage(mainDeck.get(1));
+            getPoints(nameDeck.get(1));
 
         });
 
         shuffle.setOnAction(e -> {
-
-            Collections.shuffle(mainDeck);
 
             System.out.println("Shuffled");
         });
@@ -180,16 +184,16 @@ public class BlackApp extends Application {
                 window.setScene(youLost);
             } else if (cardsInHand == 2) {
                 view2.setImage(mainDeck.get(2));
-                getPoint(mainDeck.get(2).getUrl());
+                getPoints(nameDeck.get(2));
                 cardsInHand++;
             } else if (cardsInHand == 3) {
                 view3.setImage(mainDeck.get(3));
-                getPoint(mainDeck.get(2).getUrl());
+                getPoints(nameDeck.get(3));
 
                 cardsInHand++;
             } else if (cardsInHand == 4) {
                 view4.setImage(mainDeck.get(4));
-                getPoint(mainDeck.get(2).getUrl());
+                getPoints(nameDeck.get(4));
 
                 cardsInHand++;
             }
@@ -197,13 +201,14 @@ public class BlackApp extends Application {
         });
 
         end.setOnAction(e -> {
-
         });
 
         primaryStage.setScene(welcomeScene);
         primaryStage.show();
 
     }
+    
+
 
     public static void main(String[] args) {
         launch(args);
@@ -223,201 +228,153 @@ public class BlackApp extends Application {
 
     public void setDecks(Integer amntDecks) {
         if (amntDecks == 1) {
-            deck1 = load(deck1);
+            deck1 = loadImage(deck1);
+            name1 = loadName(name1);
             mainDeck.addAll(deck1);
+            nameDeck.addAll(name1);
             Collections.shuffle(mainDeck, new Random(seed));
             Collections.shuffle(nameDeck, new Random(seed));
-            
-            loadURL(deckURL, 1);
 
         } else if (amntDecks == 2) {
-            deck1 = load(deck1);
-            deck2 = load(deck2);
+            deck1 = loadImage(deck1);
+            deck2 = loadImage(deck2);
+
+            name2 = loadName(name2);
+            name2 = loadName(name2);
+
             mainDeck.addAll(deck1);
             mainDeck.addAll(deck2);
+            nameDeck.addAll(name1);
+            nameDeck.addAll(name2);
+
             Collections.shuffle(mainDeck, new Random(seed));
             Collections.shuffle(nameDeck, new Random(seed));
-            loadURL(deckURL, 2);
 
         } else if (amntDecks == 3) {
-            deck1 = load(deck1);
-            deck2 = load(deck2);
-            deck3 = load(deck3);
+            deck1 = loadImage(deck1);
+            deck2 = loadImage(deck2);
+            deck3 = loadImage(deck3);
+            name1 = loadName(name1);
+            name2 = loadName(name2);
+            name3 = loadName(name3);
+
             mainDeck.addAll(deck1);
             mainDeck.addAll(deck2);
             mainDeck.addAll(deck3);
-            
-            
-            
+            nameDeck.addAll(name1);
+            nameDeck.addAll(name2);
+            nameDeck.addAll(name3);
+
             // UPDATE THIS
             mainDeck.addAll(deck1);
             mainDeck.addAll(deck2);
             mainDeck.addAll(deck3);
             Collections.shuffle(mainDeck, new Random(seed));
             Collections.shuffle(nameDeck, new Random(seed));
-            loadURL(deckURL, 3);
 
         } else if (amntDecks == 4) {
-            deck1 = load(deck1);
-            deck2 = load(deck2);
-            deck3 = load(deck3);
-            deck4 = load(deck4);
+            deck1 = loadImage(deck1);
+            deck2 = loadImage(deck2);
+            deck3 = loadImage(deck3);
+            deck4 = loadImage(deck4);
+            name1 = loadName(name1);
+            name2 = loadName(name2);
+            name3 = loadName(name3);
+            name4 = loadName(name4);
+
             mainDeck.addAll(deck1);
             mainDeck.addAll(deck2);
             mainDeck.addAll(deck3);
             mainDeck.addAll(deck4);
+            nameDeck.addAll(name1);
+            nameDeck.addAll(name2);
+            nameDeck.addAll(name3);
+            nameDeck.addAll(name4);
+
             Collections.shuffle(mainDeck, new Random(seed));
             Collections.shuffle(nameDeck, new Random(seed));
-            loadURL(deckURL, 4);
 
         }
     }
 
-    public List load(List<Image> newDeck) {
+    public List loadImage(List<Image> newDeck) {
         count = 0;
         for (int i = 0; i < 4; i++) {
-            for (int k = 0; k < 10; k++) {
+            for (int k = 0; k < 13; k++) {
                 newDeck.add(new Image("images/" + prefix.get(i) + "" + (k + 1) + ".png"));
+//                System.out.println("images/" + prefix.get(i) + "" + (k + 1) + ".png");
                 count++;
             }// end number card for loop
-            for (int l = 0; l < 3; l++) {
-                newDeck.add(new Image("images/" + prefix.get(l) + "" + prefixFace.get(l) + ".png"));
-                count++;
-            }// end face card for loop
         }// end deck for loop
 //        
-        System.out.println(count);
-        Collections.shuffle(newDeck);
+//        System.out.println(count);
         return newDeck;
     }
 
-    public List loadURL(List<String> tempURL, int jk) {
-        for (int i = 0; i < jk; i++) {
-            tempURL.add("images/" + prefix.get(i) + "" + prefixFace.get(i) + ".png");
-        }
-        return tempURL;
+    public List loadName(List<String> newName) {
+        count = 0;
+        for (int i = 0; i < 4; i++) {
+            for (int k = 0; k < 13; k++) {
+                newName.add(("images/" + prefix.get(i) + "" + (k + 1) + ".png"));
+                count++;
+            }// end number card for loop
+        }// end deck for loop
+//        
+        System.out.println(count);
+        return newName;
     }
 
     public Integer getPoints(String s) {
         int numPoints = 0;
-        s.substring(s.lastIndexOf("/") + 1, s.lastIndexOf("."));
-        if (s == "c1") {
-            numPoints = 1;
-        }
-        if (s == "c2") {
-            numPoints = 2;
-        }
-        if (s == "c3") {
-            numPoints = 3;
-        }
-        if (s == "c4") {
-            numPoints = 4;
-        }
-        if (s == "c5") {
-            numPoints = 5;
-        }
-        if (s == "c6") {
-            numPoints = 6;
-        }
-        if (s == "c7") {
-            numPoints = 7;
-        }
-        if (s == "c8") {
-            numPoints = 8;
-        }
-        if (s == "c9") {
-            numPoints = 9;
-        }
 
-        // Spades
-        if (s == "s1") {
-            numPoints = 1;
-        }
-        if (s == "s2") {
-            numPoints = 2;
-        }
-        if (s == "s3") {
-            numPoints = 3;
-        }
-        if (s == "s4") {
-            numPoints = 4;
-        }
-        if (s == "s5") {
-            numPoints = 5;
-        }
-        if (s == "s6") {
-            numPoints = 6;
-        }
-        if (s == "s7") {
-            numPoints = 7;
-        }
-        if (s == "s8") {
-            numPoints = 8;
-        }
-        if (s == "s9") {
-            numPoints = 9;
-        }
+        String numberOnly = s.replaceAll("[^0-9]", "");
 
-        //// Hearts
-        if (s == "h1") {
+        int result = Integer.parseInt(numberOnly);
+        if (result == 1) {
             numPoints = 1;
         }
-        if (s == "h2") {
+        if (result == 2) {
             numPoints = 2;
         }
-        if (s == "h3") {
+        if (result == 3) {
             numPoints = 3;
         }
-        if (s == "h4") {
+        if (result == 4) {
             numPoints = 4;
         }
-        if (s == "h5") {
+        if (result == 5) {
             numPoints = 5;
         }
-        if (s == "h6") {
+        if (result == 6) {
             numPoints = 6;
         }
-        if (s == "h7") {
+        if (result == 7) {
             numPoints = 7;
         }
-        if (s == "h8") {
+        if (result == 8) {
             numPoints = 8;
         }
-        if (s == "h9") {
+        if (result == 9) {
             numPoints = 9;
         }
-
-        // Diamonds
-        if (s == "d1") {
-            numPoints = 1;
+        if (result == 10) {
+            numPoints = 10;
         }
-        if (s == "d2") {
-            numPoints = 2;
+        if (result == 11) {
+            numPoints = 10;
         }
-        if (s == "d3") {
-            numPoints = 3;
+        if (result == 12) {
+            numPoints = 10;
         }
-        if (s == "d4") {
-            numPoints = 4;
-        }
-        if (s == "d5") {
-            numPoints = 5;
-        }
-        if (s == "d6") {
-            numPoints = 6;
-        }
-        if (s == "d7") {
-            numPoints = 7;
-        }
-        if (s == "d8") {
-            numPoints = 8;
-        }
-        if (s == "d9") {
-            numPoints = 9;
+        if (result == 13) {
+            numPoints = 10;
         }
 
         totalPoints += numPoints;
         didIWin();
+//        System.out.println(numPoints );
+        System.out.println(s);
+        System.out.println(totalPoints);
         return numPoints;
 
     }
@@ -429,6 +386,7 @@ public class BlackApp extends Application {
     public void didIWin() {
         if (totalPoints > 21) {
             win = true;
+            didYouLoose = true;
         } else {
             howClose = (21 - totalPoints);
             win = false;
